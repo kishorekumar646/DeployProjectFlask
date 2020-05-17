@@ -158,14 +158,12 @@ def login():
                         login_user(user, remember=form.remember.data)
                         print('log')
                         next_page = request.args.get('next')
-                        print(next_page)
                         # Generating JWT token
                         token = token_activation(user.username, user.email)
-                        print("Thanuja")
+                        print("Thanuja: ",token)
                         # Storing token into redis cache
                         redis_client.set(token, token)
-                        redr = make_response(redirect(next_page) if next_page else redirect(
-                            url_for('home')))
+                        redr = redirect(url_for('home'))
                         redr.set_cookie('token', token)
                         print(redr)
                         return redr
