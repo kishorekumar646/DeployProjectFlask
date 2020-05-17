@@ -163,6 +163,7 @@ def login():
                         print("Thanuja: ",token)
                         # Storing token into redis cache
                         redis_client.set(token, token)
+                        print("redis key")
                         redr = redirect(url_for('home'))
                         redr.set_cookie('token', token)
                         print(redr)
