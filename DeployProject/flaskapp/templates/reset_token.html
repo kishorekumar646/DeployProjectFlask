@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h4 class="mb-3">Reset your password</h4>
+    <form class="reset-password-form" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-input">
+            <div class="form-field"> 
+                <span><i class="fa fa-lock"></i></span>
+                {{ form.password(placeholder="Password") }}
+                {% if form.password.errors %}
+                    <ul class="errors">
+                        {% for error in form.password.errors %}
+                            <li style="list-style: none;color: red;">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-input">
+            <div class="form-field"> 
+                <span><i class="fa fa-lock"></i></span>
+                {{ form.confirm_password(placeholder="Confirm Password") }}
+                {% if form.confirm_password.errors %}
+                    <ul class="errors">
+                        {% for error in form.confirm_password.errors %}
+                            <li style="list-style: none;color: red;">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="text-left mb-3">
+            <button type="submit" class="btn">Register</button>
+        </div>
+    </form>
+{% endblock content %}

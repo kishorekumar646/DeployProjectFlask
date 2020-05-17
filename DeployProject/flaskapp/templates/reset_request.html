@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="reset-form d-block">
+        <h4 class="mb-3">Reset your password</h4>
+        <p class="mb-3 text-white">Please enter your email address</p>
+        <form class="reset-password-form" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-input">
+                <span><i class="fa fa-envelope"></i></span>
+                {{ form.email(placeholder="Email Address") }}
+                {% if form.email.errors %}
+                    <ul class="errors">
+                        {% for error in form.email.errors %}
+                            <li style="list-style: none;color: red;">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="text-left mb-3">
+                <button class="btn" type="submit">Send reset link</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+
