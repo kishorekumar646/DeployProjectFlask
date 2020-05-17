@@ -42,6 +42,7 @@ def home():
 def account():
     form = LoginForm()
     token = request.cookies.get('token')
+    print('token: ',token)
     if token:
         redis_token = redis_client.get(token)
         if redis_token:
