@@ -2,7 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_images import Images
 import os
 from flask_mail import Mail
 from itsdangerous import URLSafeSerializer
@@ -33,7 +32,6 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'kishorekumar131646@gmail.com'
 app.config['MAIL_PASSWORD'] = 'Kishorekumar@646'
 mail = Mail(app)
-images = Images(app)
 auth_s = URLSafeSerializer(app.config['SECRET_KEY'], "auth")
 
 
