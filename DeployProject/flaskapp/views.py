@@ -17,24 +17,20 @@ redis_client = redis.Redis(host="localhost", port=6379)
 @login_required
 def home():
     form = LoginForm()
-    token = request.cookies.get('token')
-    print('token: ',token)
-    if token:
-        redis_token = redis_client.get(token)
-        if redis_token:
-            username = validate_token(redis_token)
-            if username:
-                user = User.query.filter_by(username=username).first()
-                return render_template('home.html', title='Account')
-            else:
-
-                return render_template('login.html', title='Login', form=form)
+    
+    redis_token = redis_client.get('token')
+    if redis_token:
+        username = validate_token(redis_token)
+        if username:
+            user = User.query.filter_by(username=username).first()
+            return render_template('home.html', title='Account')
         else:
 
             return render_template('login.html', title='Login', form=form)
     else:
 
         return render_template('login.html', title='Login', form=form)
+
     return render_template('login.html', title='Login', form=form)
 
 
@@ -42,24 +38,20 @@ def home():
 @login_required
 def account():
     form = LoginForm()
-    token = request.cookies.get('token')
     
-    if token:
-        redis_token = redis_client.get(token)
-        if redis_token:
-            username = validate_token(redis_token)
-            if username:
-                user = User.query.filter_by(username=username).first()
-                return render_template('account.html', title='Account')
-            else:
-
-                return render_template('login.html', title='Login', form=form)
+    redis_token = redis_client.get(token)
+    if redis_token:
+        username = validate_token(redis_token)
+        if username:
+            user = User.query.filter_by(username=username).first()
+            return render_template('account.html', title='Account')
         else:
 
             return render_template('login.html', title='Login', form=form)
     else:
 
         return render_template('login.html', title='Login', form=form)
+
     return render_template('login.html', title='Login', form=form)
 
 
@@ -162,11 +154,12 @@ def login():
                         # Generating JWT token
                         token = token_activation(user.username, user.email)
                         # Storing token into redis cache
-                        redis_client.set(token, token)
-                        redr = redirect(next_page) if next_page else redirect(
-                            url_for('home'))
-                        redr.set_cookie('token', token)
-                        return redr
+                        redis_client.set('token', token)
+                        # redr = redirect(next_page) if next_page else redirect(
+                        #     url_for('home'))
+                        # redr.set_cookie('token', token)
+                        # print(redr)
+                        return redirect(url_for('home'))
 
                     else:
                         flash(
