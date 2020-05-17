@@ -163,8 +163,8 @@ def login():
                         token = token_activation(user.username, user.email)
                         # Storing token into redis cache
                         redis_client.set(token, token)
-                        redr = redirect(next_page) if next_page else redirect(
-                            url_for('home'))
+                        redr = make_response(redirect(next_page) if next_page else redirect(
+                            url_for('home')))
                         redr.set_cookie('token', token)
                         print(redr)
                         return redr
