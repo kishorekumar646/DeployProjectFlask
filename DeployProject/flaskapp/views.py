@@ -18,7 +18,6 @@ redis_client = redis.Redis(host="localhost", port=6379)
 def home():
     form = LoginForm()
     token = request.cookies.get('token')
-    print('token: ',token)
     if token:
         redis_token = redis_client.get(token)
         if redis_token:
@@ -156,17 +155,12 @@ def login():
 
                     if user.is_active:
                         login_user(user, remember=form.remember.data)
-                        print('log')
-                        next_page = request.args.get('next')
                         # Generating JWT token
                         token = token_activation(user.username, user.email)
-                        print("Thanuja: ",token)
                         # Storing token into redis cache
                         redis_client.set(token, token)
-                        print("redis key")
                         redr = redirect(url_for('home'))
                         redr.set_cookie('token', token)
-                        print(redr)
                         return redr
 
                     else:
@@ -201,7 +195,6 @@ def reset_request():
     if request.method == "POST":
         email = form.email
         if form.validate_on_submit():
-            print('ok')
             user = form.validate_reset_email(email)
             if user:
                 token = token_activation(user.username, user.email)
@@ -230,7 +223,6 @@ def reset_token(token):
         form = ResetPasswordForm()
         if request.method == "POST":
             if form.validate_on_submit():
-                print('post')
                 if form.password.data == form.confirm_password.data:
                     update = User.query.filter_by(id=user.id).update(
                         {User.password_hash: user.set_password(password=form.password.data)})

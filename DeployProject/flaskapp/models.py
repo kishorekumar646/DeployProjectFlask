@@ -9,7 +9,6 @@ from .exception import Unauthenticated
 
 @login_manager.user_loader
 def load_user(user_id):
-    print('login')
     return User.query.get(int(user_id))
 
 
@@ -51,11 +50,9 @@ def authenticate_user(email, password):
     user = User.query.filter_by(email=email).first()
 
     if user is None:
-        print("user : ", user)
         return False
 
     if user.check_password(password=password):
-        print('ok')
         return user
 
     return False
