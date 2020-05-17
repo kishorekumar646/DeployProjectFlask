@@ -161,6 +161,7 @@ def login():
                         print(next_page)
                         # Generating JWT token
                         token = token_activation(user.username, user.email)
+                        print("Thanuja")
                         # Storing token into redis cache
                         redis_client.set(token, token)
                         redr = make_response(redirect(next_page) if next_page else redirect(
