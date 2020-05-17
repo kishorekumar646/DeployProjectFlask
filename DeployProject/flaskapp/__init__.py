@@ -14,7 +14,7 @@ app = Flask(__name__,static_folder='static',template_folder='templates')
 SECRET_KEY_JWT = 'cb5a0fb869b53f9aec4ac70af0a2143a'
 app.config['SECRET_KEY'] = 'beaa4c2cea1c931323b8eee58104b0cc'
 
-engine = create_engine('mysql://krish:12345@localhost:3306/deploy', convert_unicode=True)
+engine = create_engine('mysql://krish:Kishorekumar@646@localhost:3306/deploy', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
