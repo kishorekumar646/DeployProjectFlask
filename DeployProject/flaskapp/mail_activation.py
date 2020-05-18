@@ -13,6 +13,7 @@ def send_reset_email(user,received_token):
     {url_for('reset_token', token=token, _external=True)}
     If you did not make this request then simply ignore this email and no changes will be made.
     '''
+    print(msg)
     mail.send(msg)
 
 def register_mail_activate(user,received_token):
